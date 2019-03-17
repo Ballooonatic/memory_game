@@ -13,7 +13,7 @@ A simple card memory game built with the big three HTML, CSS and JS.
 
 I want to try using this readme as a chronological outline of my plan for the project.
 
-### Thursday 3/15 - The Beginning
+### Session 0 ~ The Beginning
 
 So I guess the only two directions to go with this are:
 
@@ -51,8 +51,16 @@ I suppose the players will have their own objects too, with a score value and ma
 
 ##### Game
 
-Managing game state is probably the thing I'm least sure about how to do right now. I can't think of another way to do it other than having flag variables, and styling dependent upon them. For example, it might start with a `titleScreen = true` so as to provide a sense of where one is in the process instead of the game just starting, and have a kind of modal or overlay with a start button. Make sure to turn that false when start is clicked, and switch over to `mainScreen`, and `endScreen` when finished. The main game state will be the only one with no overlay.
+Managing game state is probably the thing I'm least sure about how to do right now. I can't think of another way to do it other than having flag variables, and styling dependent upon them. For example, it might start with a `titleScreen = true` so as to provide a sense of where one is in the process instead of the game just starting, and have a kind of modal or overlay with a start button. Make sure to turn that false when start is clicked, and switch over to `mainScreen`, and `endScreen` when finished. The main game state will be the only one with no overlay. EDIT: Maybe I'll just do one state variable with a string for which state is active. That way I only gotta change one variable instead of two and worrying about inconsistency.
 
 As for flow: you have a title screen, press start, it's playerOne's turn, the cards are shown briefly before turning black, cards are picked and turns are switched, until they run out, at which point the endScreen comes and tells who got the most matches. I was thinking of having a certain number of turns and refreshing cards, but this is probably easier.
 
 I think that's all I can do to plan for now.
+
+### Session 1 ~ Modal Troubles
+
+I've set up the inital foundation for the game by now and I'm forgetting that I wanted to try doing this chronologically, kind of documenting my progress and challenges and such. I can't cover every little thing; deciding what not to omit is a challenge in itself.
+
+Right now, I'm trying to get the first title screen going. I looked up on [www.w3schools.com](w3schools) how to do a modal (I'm hoping that link works; I don't feel like looking up markdown links). So I'm working this modal example into my own wicked ends, and instead of their demo clicking a button to show it, I want it to show on page load. Seems `window.onload` doesn't wanna work for me for some reason.
+
+The console was showing me that the modal I was trying to display within that onload function was `null`, so it turned out to be an easy variable scoping issue. Not sure why their code works with the modal being defined outside the function and not mine, but hey. Programming! Now I just gotta make this thing look not disgusting.
