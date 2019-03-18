@@ -64,3 +64,7 @@ I've set up the inital foundation for the game by now and I'm forgetting that I 
 Right now, I'm trying to get the first title screen going. I looked up on [www.w3schools.com](w3schools) how to do a modal (I'm hoping that link works; I don't feel like looking up markdown links). So I'm working this modal example into my own wicked ends, and instead of their demo clicking a button to show it, I want it to show on page load. Seems `window.onload` doesn't wanna work for me for some reason.
 
 The console was showing me that the modal I was trying to display within that onload function was `null`, so it turned out to be an easy variable scoping issue. Not sure why their code works with the modal being defined outside the function and not mine, but hey. Programming! Now I just gotta make this thing look not disgusting.
+
+### Session 2 ~ Perfecting the Card Display Functionality
+
+So I've finally gotten the cards looking nice and showing properly when clicked... almost. If you're slow enough, after 2 are clicked they will (for now) cover back up regardless of a match. But you can click them fast enough to beat the code and start screwing things up, so I want to fix that. At the moment, I'm trying to temporarily remove and re-add the event listener on all cover cards upon revealing 2 cards. Lol. Things are getting hairy. It is currently doing some crazy things. I'm actually not sure how to fix this one yet. I'm pretty tired, and have been at this for a while. I can feel my mind slowing. Time to call it a night.
