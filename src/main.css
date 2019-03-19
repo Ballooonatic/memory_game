@@ -1,9 +1,9 @@
 * {
-    font-family: 'Courier New', Courier, monospace
+    font-family: 'Courier New', Courier, monospace;
 }
 
 body {
-    background-color: #222
+    background-color: #222;
 }
 
 h1 {
@@ -12,7 +12,9 @@ h1 {
     font-weight: 500;
 }
 
-#title-screen {
+
+
+.modal {
     position: fixed;
     z-index: 1;
     left: 0;
@@ -27,10 +29,40 @@ h1 {
 .title,
 .subtitle {
     background-color: rgba(0, 0, 0, 0);
-    margin: 15% auto;
+    margin: 10% auto;
     color: #ddd;
     text-align: center;
 }
+
+#end-screen {
+    display: none;
+}
+
+
+
+
+
+#score {
+    margin: 0 auto;
+    width: 575px;
+    height: 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#player-one-score { 
+    color: red; 
+    display: inline;
+}
+
+#player-two-score { 
+    color: blue;
+    display: inline;
+}
+
+
+
+
 
 #cards-container {
     background-color: #333333;
@@ -48,16 +80,6 @@ h1 {
 .card {
     height: 125px;
     width: 85px;
-    margin: 0 30px;
+    margin: 0 25px;
     border-radius: 5px;
-}
-
-.cover-card {
-    background-color: black;
-    position: relative;
-    right: 30px;
-}
-
-.revealed {
-    display: none;
 }

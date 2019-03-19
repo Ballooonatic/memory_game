@@ -61,10 +61,20 @@ I think that's all I can do to plan for now.
 
 I've set up the inital foundation for the game by now and I'm forgetting that I wanted to try doing this chronologically, kind of documenting my progress and challenges and such. I can't cover every little thing; deciding what not to omit is a challenge in itself.
 
-Right now, I'm trying to get the first title screen going. I looked up on [www.w3schools.com](w3schools) how to do a modal (I'm hoping that link works; I don't feel like looking up markdown links). So I'm working this modal example into my own wicked ends, and instead of their demo clicking a button to show it, I want it to show on page load. Seems `window.onload` doesn't wanna work for me for some reason.
+Right now, I'm trying to get the first title screen going. I looked up on [w3schools](www.w3schools.com) how to do a modal. So I'm working this modal example into my own wicked ends, and instead of their demo clicking a button to show it, I want it to show on page load. Seems `window.onload` doesn't wanna work for me for some reason.
 
 The console was showing me that the modal I was trying to display within that onload function was `null`, so it turned out to be an easy variable scoping issue. Not sure why their code works with the modal being defined outside the function and not mine, but hey. Programming! Now I just gotta make this thing look not disgusting.
 
 ### Session 2 ~ Perfecting the Card Display Functionality
 
 So I've finally gotten the cards looking nice and showing properly when clicked... almost. If you're slow enough, after 2 are clicked they will (for now) cover back up regardless of a match. But you can click them fast enough to beat the code and start screwing things up, so I want to fix that. At the moment, I'm trying to temporarily remove and re-add the event listener on all cover cards upon revealing 2 cards. Lol. Things are getting hairy. It is currently doing some crazy things. I'm actually not sure how to fix this one yet. I'm pretty tired, and have been at this for a while. I can feel my mind slowing. Time to call it a night.
+
+Update: I found an awesome [reddit thread](https://www.reddit.com/r/learnjavascript/comments/8ly7sp/temporarily_disabling_all_event_handlers_in/) that helped me solve this issue. So instead of adding and removing event handlers on the fly, we create a boolean `pauseInput`, and a function `pauseable` to wrap our event callbacks in. So basically instead of giving the callback right to the `addEventListener` function, we pass in `pauseable` and pass our callback in to `pauseable`. So what `pauseable` does is it checks the value of `pauseInput`, and will return the callback only if it's false. This way we can pause our inputs just by changing the boolean value `pauseInput` anywhere we so choose. Wowee
+
+### Session 3 ~ Handling Card Matching
+
+All this time I'd thought having a cover over the cards and removing them on click would be easier, because how would we keep track of the colors? How could I change it from the cover color to the face color, keeping track of each card's corresponding colors? Now that I've gotten to the part where I change player scores and turns depending on matchups, I don't know how to access the colors of the cards I've revealed because the event was bound to the cover, which isn't connected to the face card. Oof. I was able to figure out a way to re-code it without the cover cards, simply changing the colors instead. I didn't my first try was going to work, though!
+
+### Final Thoughts
+
+Well, I didn't run into any other major challenges finishing the game. It could be a little prettier, but it'll do. Thanks for reading!

@@ -1,14 +1,13 @@
 (function(){
 
-'use strict';
+"use strict";
 
 
 
-let state = "titleScreen";
 
 let playerOne = {
     score: 0,
-    isTheirTurn: false
+    isTheirTurn: true
 }
 
 let playerTwo = {
@@ -40,15 +39,19 @@ let cards = [
 
 let cardsRevealed = 0;
 
+let turnsLeft = 0;
+
+let pauseInput = false;
+
+
 
 window.onload = () => {
-    let titleScreen = document.getElementById('title-screen');
+    let titleScreen = document.getElementById("title-screen");
     titleScreen.style.display = "block";
-    state = "titleScreen";
 }
 
 window.onclick = event => {
-    let titleScreen = document.getElementById('title-screen');
+    let titleScreen = document.getElementById("title-screen");
     if (event.target == titleScreen) {
         titleScreen.style.display = "none";
         setupGame();
@@ -57,68 +60,118 @@ window.onclick = event => {
 
 
 
+
+
 function setupGame() {
 
-    state = "mainGame";
-
-    setPlayerTurn(playerOne);
+    turnsLeft = 10;
 
     let deck = shuffle(cards)
 
 
     for (let card of deck) {
         
-        let face = document.createElement("div");
-        let cover = document.createElement("div");
+        let newCard = document.createElement("div");
 
-        face.classList.add("card", "face-card");
-        face.style.backgroundColor = card.color;
-
-        cover.classList.add("card", "cover-card");
+        newCard.classList.add("card");
+        newCard.style.backgroundColor = "black";
 
         let cardsContainer = document.getElementById("cards-container");
-        cardsContainer.insertBefore(face, null); 
-        setTimeout(() => face.insertBefore(cover, null), 1000)
+        cardsContainer.insertBefore(newCard, null); 
         
 
-        cover.addEventListener("click", function showCard() {
+        newCard.addEventListener("click", pauseable(() => {
 
-            cover.classList.add("revealed");
             cardsRevealed++;
+            newCard.style.backgroundColor = card.color;
+            newCard.classList.add("revealed")
 
             if (cardsRevealed >= 2) {
 
+                pauseInput = true;
+
+                let shownCards = document.getElementsByClassName("revealed");
+                if (shownCards[0].style.backgroundColor === shownCards[1].style.backgroundColor) {
+                    if (playerOne.isTheirTurn) updatePlayerScore(playerOne);
+                    else if (playerTwo.isTheirTurn) updatePlayerScore(playerTwo);
+                }
+
                 setTimeout(() => {
-                    cover.classList.remove("revealed");
-                    let revealedCards = document.getElementsByClassName("revealed");
-                    for (let card of revealedCards) {
-                        card.classList.remove("revealed");
+                    pauseInput = false;
+                    newCard.style.backgroundColor = "black";
+                    newCard.classList.remove("revealed")
+                    
+                    for (let revealedCard of shownCards) {
+                        revealedCard.style.backgroundColor = "black";
+                        revealedCard.classList.remove("revealed");
                     }
                     cardsRevealed = 0;
+                    togglePlayerTurn();
                 }, 1000);
-
-                for (let card of document.getElementsByClassName('cover-card')) {
-                    card.removeEventListener("click", showCard);
-                    setTimeout(() => card.addEventListener("click", showCard), 1000);
-                }
             }
-        });
+        }));
     }
 
 }
 
-function setPlayerTurn(player) {
 
-    if (player === playerOne) {
-        playerTwo.isTheirTurn = false;
-        document.getElementById("playerTurnDisplay").innerHTML = "Player 1's turn!"
-    } else {
+
+
+
+function endGame() {
+
+    if (playerOne.score > playerTwo.score) {
+        document.getElementById("winner").innerHTML = "Player 1 wins!"
+
+    } else if (playerTwo.score > playerOne.score) {
+        document.getElementById("winner").innerHTML = "Player 2 wins!"
+    }
+
+    let endScreen = document.getElementById("end-screen");
+    endScreen.style.display = "block";
+}
+
+
+
+
+
+function togglePlayerTurn() {
+
+    if (playerOne.isTheirTurn) {
+
         playerOne.isTheirTurn = false;
-        document.getElementById("playerTurnDisplay").innerHTML = "Player 2's turn!"
+        playerTwo.isTheirTurn = true;
+        document.getElementById("player-turn-display").innerHTML = "Player 2's turn!"
+
+    } else if (playerTwo.isTheirTurn) {
+
+        playerTwo.isTheirTurn = false;
+        playerOne.isTheirTurn = true;
+        document.getElementById("player-turn-display").innerHTML = "Player 1's turn!"
     }
-    
-    player.isTheirTurn = true;
+
+    turnsLeft--;
+
+    if (turnsLeft < 1) endGame();
 }
+
+
+
+
+
+function updatePlayerScore(player) {
+
+    player.score++;
+    
+    if (player === playerOne) {
+        document.getElementById("player-one-score").innerHTML = "P1: " + playerOne.score;
+    } else {
+        document.getElementById("player-two-score").innerHTML = "P2: " + playerTwo.score;
+    }
+}
+
+
+
 
 
 function shuffle(a) {
@@ -134,5 +187,18 @@ function shuffle(a) {
     
     return a;
 }
+
+
+
+
+
+function pauseable (handler) {
+    return function (event) {
+        if (pauseInput) {
+            return;
+        }
+        return handler(event);
+    };
+};
 
 })();

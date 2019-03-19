@@ -8,17 +8,27 @@
 </head>
 <body>
 
-    <div id="title-screen">
-
+    <div id="title-screen" class="modal">
         <h1 class="title">memory game!</h1>
-
         <p class="subtitle">( click anywhere to begin )</p>
-
     </div>
+
+    <div id="end-screen" class="modal">
+        <h1 class="title">~ GAME OVER ~</h1>
+        <h1 id="winner">Nobody wins!</h1>
+        <p class="subtitle">( refresh the page to restart )</p>
+    </div>
+
+
 
     <div id="cards-container"></div>
 
-    <h1 id="playerTurnDisplay"></h1>
+    <div id="score">
+        <h1 id="player-one-score">P1: 0</h1>
+        <h1 id="player-two-score">P2: 0</h1>
+    </div>
+        
+    <h1 id="player-turn-display">Player 1's Turn!</h1>
 
 </body>
 </html>
