@@ -37,9 +37,9 @@ let cards = [
     {color: "#5a4077"}
 ]
 
-let cardsRevealed = 0;
+let cardsPicked = 0;
 
-let turnsLeft = 0;
+let cardsRevealed = 0;
 
 let pauseInput = false;
 
@@ -54,7 +54,7 @@ window.onclick = event => {
     let titleScreen = document.getElementById("title-screen");
     if (event.target == titleScreen) {
         titleScreen.style.display = "none";
-        setupGame();
+        main();
     }
 }
 
@@ -62,9 +62,8 @@ window.onclick = event => {
 
 
 
-function setupGame() {
+function main() {
 
-    turnsLeft = 10;
 
     let deck = shuffle(cards)
 
@@ -74,38 +73,44 @@ function setupGame() {
         let newCard = document.createElement("div");
 
         newCard.classList.add("card");
-        newCard.style.backgroundColor = "black";
+        newCard.style.backgroundColor = card.color;
+        setTimeout(() => newCard.style.backgroundColor = "black", 1000) 
 
         let cardsContainer = document.getElementById("cards-container");
         cardsContainer.insertBefore(newCard, null); 
         
 
-        newCard.addEventListener("click", pauseable(() => {
-
-            cardsRevealed++;
+        newCard.addEventListener("click", pauseable(function showCard() {
+            if (newCard.style.backgroundColor !== "black") return;
             newCard.style.backgroundColor = card.color;
             newCard.classList.add("revealed")
+            cardsPicked++;
 
-            if (cardsRevealed >= 2) {
-
+            if (cardsPicked >= 2) {
                 pauseInput = true;
-
-                let shownCards = document.getElementsByClassName("revealed");
-                if (shownCards[0].style.backgroundColor === shownCards[1].style.backgroundColor) {
-                    if (playerOne.isTheirTurn) updatePlayerScore(playerOne);
-                    else if (playerTwo.isTheirTurn) updatePlayerScore(playerTwo);
-                }
-
                 setTimeout(() => {
-                    pauseInput = false;
-                    newCard.style.backgroundColor = "black";
-                    newCard.classList.remove("revealed")
-                    
-                    for (let revealedCard of shownCards) {
-                        revealedCard.style.backgroundColor = "black";
-                        revealedCard.classList.remove("revealed");
+
+                    let shownCards = document.getElementsByClassName("revealed");
+
+                    if (shownCards[0].style.backgroundColor === shownCards[1].style.backgroundColor) {
+
+                        if (playerOne.isTheirTurn) updatePlayerScore(playerOne);
+                        else if (playerTwo.isTheirTurn) updatePlayerScore(playerTwo);
+
+                        cardsRevealed += 2;
+                        if (cardsRevealed === 16) endGame();
+
+                    } else {
+
+                        newCard.style.backgroundColor = "black";
+                        for (let c of shownCards) c.style.backgroundColor = "black";
+                        
                     }
-                    cardsRevealed = 0;
+                    newCard.classList.remove("revealed")
+                    for (let c of shownCards) c.classList.remove("revealed");
+                    
+                    pauseInput = false;
+                    cardsPicked = 0;
                     togglePlayerTurn();
                 }, 1000);
             }
@@ -150,9 +155,6 @@ function togglePlayerTurn() {
         document.getElementById("player-turn-display").innerHTML = "Player 1's turn!"
     }
 
-    turnsLeft--;
-
-    if (turnsLeft < 1) endGame();
 }
 
 

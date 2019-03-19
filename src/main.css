@@ -6,7 +6,7 @@ body {
     background-color: #222;
 }
 
-h1 {
+h1, h2, p {
     text-align: center;
     color: #ddd;
     font-weight: 500;
@@ -51,12 +51,12 @@ h1 {
 }
 
 #player-one-score { 
-    color: red; 
+    color: #842a2a; 
     display: inline;
 }
 
 #player-two-score { 
-    color: blue;
+    color: #454f96;
     display: inline;
 }
 

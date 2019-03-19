@@ -75,6 +75,10 @@ Update: I found an awesome [reddit thread](https://www.reddit.com/r/learnjavascr
 
 All this time I'd thought having a cover over the cards and removing them on click would be easier, because how would we keep track of the colors? How could I change it from the cover color to the face color, keeping track of each card's corresponding colors? Now that I've gotten to the part where I change player scores and turns depending on matchups, I don't know how to access the colors of the cards I've revealed because the event was bound to the cover, which isn't connected to the face card. Oof. I was able to figure out a way to re-code it without the cover cards, simply changing the colors instead. I didn't my first try was going to work, though!
 
+### Session 4 ~ Reworking the Game
+
+I've gotten this far and realized I missed one small detail... In the instructions for this game, the cards were meant to stay shown if matched, and the game ends when all cards are up. This whole time I'd simply counted the matches, and even kept the colors the same. The players could've simply matched the same cards over and over to win. As hilarious as this is, going back and reworking my solution was a pain. I was having the worst time getting the proper cards to turn back over after a mismatch. Turns out the cards I was pulling that were supposed to be shown weren't getting removed from that list like I'd wanted upon mismatch, and I was having a hard time accessing the right ones from that collection in the first place... But I'd figured it out.
+
 ### Final Thoughts
 
-Well, I didn't run into any other major challenges finishing the game. It could be a little prettier, but it'll do. Thanks for reading!
+Thanks so much for reading! That's about all I've got.
